@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  preprocessing:
+    build: .
+    container_name: telco_preprocessing
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+    command: python preprocessing.py
+
+  model_training:
+    build: .
+    container_name: telco_model_training
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+    depends_on:
+      - preprocessing
+    command: python model_training.py
